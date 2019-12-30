@@ -1,0 +1,33 @@
+#
+#	Syntax Colouring for UltimateDebounce Library
+#
+
+#	Created on:  2019-11-25
+#	Created by: sunkmail
+
+####################################### 
+
+# Class (KEYWORD1)
+
+#######################################
+
+UltimateDebounce	KEYWORD1
+
+
+#######################################
+
+# Methods and Functions (KEYWORD2)
+
+#######################################	
+ultimateDebounce KEYWORD2
+update	KEYWORD2
+is_up	KEYWORD2
+is_down	KEYWORD2
+is_pressed	KEYWORD2
+is_released	KEYWORD2
+
+#######################################
+# Constants (LITERAL1)
+#######################################
+# KEYWORD3  ??
+MASK8	KEYWORD3
