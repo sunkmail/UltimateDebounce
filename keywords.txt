@@ -12,6 +12,7 @@
 #######################################
 
 UltimateDebounce	KEYWORD1
+UltimateDebounce16	KEYWORD1
 
 
 #######################################
@@ -20,6 +21,7 @@ UltimateDebounce	KEYWORD1
 
 #######################################	
 ultimateDebounce KEYWORD2
+ultimateDebounce16 KEYWORD2
 update	KEYWORD2
 is_up	KEYWORD2
 is_down	KEYWORD2

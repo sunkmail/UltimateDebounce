@@ -16,7 +16,7 @@
 #define CLEAR_HIST8 0b00000000
 #define SET_HIST8	0b11111111
 
-// How to impliment 16 bit class option?
+// How to impliment 16 bit option Without being a seperate Class, or mess of IF statements?
 
 #define MASK16  		0b1110000000011111		// Mask 0's are "don't care"			
 
@@ -28,7 +28,9 @@
 #define CLEAR_HIST16 	0b0000000000000000
 #define SET_HIST16		0b1111111111111111
 
-// Constructor
+// 8 BIT Class    (16 Bit Below)
+///////////////////////////////////////////////////////////////////////////////
+// Constructors
 UltimateDebounce::UltimateDebounce(uint8_t buttonPin)  // Set pin to track
 {
     _button = buttonPin;
@@ -39,8 +41,10 @@ UltimateDebounce::UltimateDebounce(uint8_t buttonPin, uint8_t activeLevel)  // S
 {
     _button = buttonPin;
 	_active = activeLevel;			// LOW or HIGH
-	
 }
+
+
+// FUNCTIONS
 
 uint8_t UltimateDebounce::read_button(void){   
 	
@@ -90,7 +94,78 @@ uint8_t UltimateDebounce::is_up(void){
 	return (_button_history == UP8);			// Return a 1 if History matches UP condition Pattern
 }
 
+// END 8 Bit Class 
+////////////////////////////////////////////////////////////////////////////////////
+
  
 
+// 16 BIT Class  
+///////////////////////////////////////////////////////////////////////////////
+// Constructors
+UltimateDebounce16::UltimateDebounce16(uint8_t buttonPin)  // Set pin to track
+{
+    _button = buttonPin;
+	_active = HIGH;
+}
 
+UltimateDebounce16::UltimateDebounce16(uint8_t buttonPin, uint8_t activeLevel)  // Set pin to track & Pin Active Setting
+{
+    _button = buttonPin;
+	_active = activeLevel;			// LOW or HIGH
+	
+}
+
+
+// FUNCTIONS
+
+uint8_t UltimateDebounce16::read_button(void){   					// Same as 8 Bit Class
+	
+	uint8_t result = false;
+	if(_active == LOW && digitalRead(_button) == LOW){
+		result = true;
+	}
+	else if(_active == HIGH && digitalRead(_button) == HIGH){
+		result = true;
+	}
+    return result;
+}
+
+void UltimateDebounce16::update(void){
+    _button_history = (_button_history << 1);
+    _button_history |= read_button();
+}
+
+uint8_t UltimateDebounce16::is_pressed(void){
+    uint8_t _pressed = 0; 
+	
+	if ((_button_history & MASK16) == PRESS16){ 
+		_pressed = 1;
+		_button_history = SET_HIST16;
+	}
+    return _pressed;
+}
+
+uint8_t UltimateDebounce16::is_released(void){
+    uint8_t _released = 0;   
+		
+	if ((MASK16 & _button_history) == RELEASE16)
+	{ 
+		_released = 1;
+		_button_history = CLEAR_HIST16;
+	}
+    return _released;
+}
+
+uint8_t UltimateDebounce16::is_down(void){
+
+	return (_button_history == DOWN16);			// Return a 1 if History matches DOWN condition Pattern
+}
+
+uint8_t UltimateDebounce16::is_up(void){
+
+	return (_button_history == UP16);			// Return a 1 if History matches UP condition Pattern
+}
+
+// END 16 Bit Class 
+////////////////////////////////////////////////////////////////////////////////////
 
